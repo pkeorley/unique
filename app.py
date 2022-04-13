@@ -26,6 +26,5 @@ if __name__ == "__main__":
     run = data["run"]
     app.run(
         debug=run["debug"],
-        threaded=run["threaded"],
-        port=run["port"]
+        threaded=run["threaded"]
     )
