@@ -10,3 +10,4 @@ gunicorn==19.9.0
 hypercorn==0.13.2
 pycryptodomex
 jinja2==2.10.1
+markupsafe==1.1.1
