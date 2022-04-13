@@ -8,6 +8,10 @@ dnspython==2.2.0
 pymongo==3.12.3
 gunicorn==19.9.0
 hypercorn==0.13.2
-pycryptodomex
-jinja2==2.10.1
-markupsafe==1.1.1
+Click==7.0
+Flask==1.1.1
+gunicorn==19.9.0
+itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
+Werkzeug==0.15.6
