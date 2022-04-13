@@ -8,3 +8,5 @@ dnspython==2.2.0
 pymongo==3.12.3
 gunicorn==19.9.0
 hypercorn==0.13.2
+pycryptodomex
+jinja2==2.10.1
