@@ -15,7 +15,7 @@ def index():
 	all_messages = [[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in history]
 	all_messages = [m[1] for m in all_messages]
 	all_words = " ".join(all_messages).split()
-	all_symbols = len("".join(all_worlds))
+	all_symbols = len("".join(all_words))
 	return render_template("index.html",
 	    messages=history,
             all_messages=len(all_messages),
