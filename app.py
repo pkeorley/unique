@@ -28,8 +28,7 @@ def login():
 
 @app.route("/chat")
 def chat():
-    if not request.cookies.get("logined"):
-        return redirect("/")
+    if not request.cookies.get("logined"): return redirect("/")
     history = users.find_one({})["messages"]
     all_messages = [[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in history]
     all_messages = [m[1] for m in all_messages]
