@@ -12,7 +12,7 @@ users = client.website.users
 @app.route("/")
 def index():
 	history = users.find_one({})["messages"]
-	all_messages = [[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in messages]
+	all_messages = [[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in history]
 	all_messages = [m[1] for m in all_messages]
 	all_words = " ".join(all_messages).split()
 	all_symbols = len("".join(all_worlds))
