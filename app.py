@@ -25,6 +25,7 @@ async def secretkey():
 if __name__ == "__main__":
     run = data["run"]
     app.run(
+        port=5000,
         debug=run["debug"],
         threaded=run["threaded"]
     )
