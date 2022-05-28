@@ -12,18 +12,18 @@ users = client.website.users
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.cookies.get("logined"):
-	return redirect("/chat")
+    return redirect("/chat")
     if request.method == "POST":
-	password = request.form.get("password")
-	if password == "putinpidaras":
-	    cookies = make_response(redirect("/chat"))
-	    cookies.set_cookie("logined", "true")
+    password = request.form.get("password")
+    if password == "putinpidaras":
+        cookies = make_response(redirect("/chat"))
+        cookies.set_cookie("logined", "true")
             return cookies
         else:
             return "Не верный пароль! Перезагрузите страницу..."
     return """<form method="post">
         <p><b>Введите пароль для входа на сайт:</b> <input name="password" id="password"></p>
-	<button>Try login</button>
+    <button>Try login</button>
     </form>"""
 
 @app.route("/chat")
@@ -37,10 +37,10 @@ def chat():
     return render_template("index.html",
         messages=history,
         all_messages=len(all_messages),
-	all_words=len(all_words),
+    all_words=len(all_words),
         all_symbols=all_symbols
     )
 
 
 if __name__ == "__main__":
-	app.run(**data["run"])
+    app.run(**data["run"])
