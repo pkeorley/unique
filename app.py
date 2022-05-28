@@ -19,12 +19,9 @@ def login():
             cookies = make_response(redirect("/chat"))
             cookies.set_cookie("logined", "true")
             return cookies
-            else:
-                return "Не верный пароль! Перезагрузите страницу..."
-        return """<form method="post">
-            <p><b>Введите пароль для входа на сайт:</b> <input name="password" id="password"></p>
-        <button>Try login</button>
-        </form>"""
+        else:
+            return "Не верный пароль! Перезагрузите страницу..."
+    return """<form method="post"><p><b>Введите пароль для входа на сайт:</b> <input name="password" id="password"></p><button>Try login</button></form>"""
 
 @app.route("/chat")
 def chat():
