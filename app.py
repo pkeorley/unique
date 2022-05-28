@@ -18,7 +18,7 @@ def login():
         if password == "putinpidaras":
             cookies = make_response(redirect("/chat"))
             cookies.set_cookie("logined", "true")
-                return cookies
+            return cookies
             else:
                 return "Не верный пароль! Перезагрузите страницу..."
         return """<form method="post">
