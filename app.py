@@ -13,7 +13,7 @@ users = client.website.users
 def index():
 	messages = users.find_one({})["messages"]
 	return render_template("index.html",
-		messages=[m[0], m[1].replace("<", "").replace(">", "").replace("&", "") for m in messages[::-1]]
+		messages=[[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in messages[::-1]]
 		)
 
 
