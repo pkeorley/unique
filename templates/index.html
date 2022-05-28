@@ -8,6 +8,7 @@
 <body>
 	<p><b>Всего сообщений:</b> {{ all_messages }}</p>
 	<p><b>Всего слов:</b> {{ all_words }}</p>
+	<p><b>Всего символов:</b> {{ all_symbols }}</p>
 	<hr>
 	{% for message in messages %}
 		<p><b>{{ message[0] }}:</b> {{ message[1] }}</p>
