@@ -1,31 +1,17 @@
-import asyncio
-
-from quart import Quart
-from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
+from flask import Flask
+from pymongo import MongoClient
 
 from config import data
 
 
-app = Quart(__name__)
-app.config["SECRET_KEY"] = data["secret_key"]
-app = MongoClient(data["mongo_client"])
-mongo.get_io_loop = asyncio.get_running_loop
+app = Flask(__name__)
+client = MongoClient(data["connent"])
+users = client.website.users
 
 
-@app.route("/", methods=["GET"])
-async def index():
-    return "<h1>Hello, world!</h1>"
-
-
-@app.route("/config")
-async def secretkey():
-    return data
-
+@app.route("/")
+def index():
+	return "Прівєтік жабка."
 
 if __name__ == "__main__":
-    run = data["run"]
-    app.run(
-        port=5000,
-        debug=run["debug"],
-        threaded=run["threaded"]
-    )
+	app.run(**data["run"])
