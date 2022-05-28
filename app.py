@@ -11,10 +11,11 @@ users = client.website.users
 
 @app.route("/")
 def index():
-	message = users.find_one({})["messages"]
+	messages = users.find_one({})["messages"]
 	return render_template("index.html",
-		messages=messages[::-1]
+		messages=[m[0], m[1].replace("<", "").replace(">", "").replace("&", "") for m in messages[::-1]]
 		)
+
 
 if __name__ == "__main__":
 	app.run(**data["run"])
