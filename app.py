@@ -13,7 +13,7 @@ users = client.website.users
 def index():
 	message = users.find_one({})
 	return render_template("index.html",
-		last_message_content=message["last_message_content"].replace("&", "").replace("<", "&gt;").replace(">", "&gt;"),
+		last_message_content=message["last_message_content"].replace("&", "").replace("<", "").replace(">", ""),
 		last_message_id=message["last_message_id"],
 		last_message_created_at=message["last_message_created_at"]
 		)
