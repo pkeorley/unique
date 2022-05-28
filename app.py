@@ -11,10 +11,17 @@ users = client.website.users
 
 @app.route("/")
 def index():
-	messages = users.find_one({})["messages"]
+	history = users.find_one({})["messages"]
+	all_messages = [[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in messages]
+	all_messages = [m[1] for m in all_messages]
+	all_words = " ".join(all_messages).split()
+	all_symbols = len("".join(all_worlds))
 	return render_template("index.html",
-		messages=[[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in messages]
-		)
+	    messages=history,
+            all_messages=len(all_messages),
+	    all_words=len(all_words),
+	    all_symbols=all_symbols
+	)
 
 
 if __name__ == "__main__":
