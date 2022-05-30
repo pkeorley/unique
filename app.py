@@ -41,10 +41,14 @@ def chat():
 
 @app.route("/invite/<key>")
 def invite(key):
-    invite = users.find_one({"type": "invite", "key": key})
+    invite = users.find_one({
+        "type": "invite",
+        "key": key
+    })
     if invite is None:
         return redirect("/")
-    return redirect(invite["url"])
+    else:
+        return redirect(invite["url"])
         
 
 if __name__ == "__main__":
