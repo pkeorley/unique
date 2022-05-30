@@ -67,7 +67,9 @@ def api_create_invite():
                 "example": "http://www.pkeorley.ml/api/invite/create/?key=google&url=https://google.com/&api_key=pLQNGMyCclqOOEUD"
             })
         elif all(args) is True:
-            if not invites.count_documents() == 0:
+            if not invites.count_documents({
+            
+            }) == 0:
                 return jsonify({
                     "error": {
                         "text": "Данный ключ уже есть в базе данных"
