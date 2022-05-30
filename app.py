@@ -7,7 +7,7 @@ from config import data
 app = Flask(__name__)
 client = MongoClient(data["connent"])
 users = client.website.users
-
+invites = client.website.invites
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -41,7 +41,7 @@ def chat():
 
 @app.route("/invite/<key>")
 def invite_(key):
-    invite = users.find_one({
+    invite = invites.find_one({
         "type": "invite",
         "key": key
     })
