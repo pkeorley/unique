@@ -54,7 +54,7 @@ def invite_(key):
     })
 
 
-@app.route("/api/invite/create/", methods=["GET", "POST"])
+@app.route("/api/invite/create", methods=["GET", "POST"])
 def api_invite_create():
     if request.method == "GET":
         args = ("key" in request.args, "url" in request.args, "api_key" in request.args)
