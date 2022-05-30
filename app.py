@@ -47,11 +47,15 @@ def invite_(key):
     })
     if invite is not None:
         return redirect(invite["url"])
-    return "<p class=\"error\">Unknown key</p>"
+    return jsonify({
+        "error": {
+            "text": "Неизвестный ключ"
+        }
+    })
 
 
 @app.route("/api/invite/create/", methods=["GET", "POST"])
-def api_create_invite():
+def api_invite_create():
     if request.method == "GET":
         args = ("key" in request.args, "url" in request.args, "api_key" in request.args)
         if all(args) is False:
@@ -113,6 +117,37 @@ def api_create_invite():
             return jsonify({
                 "result": f"http://www.pkeorley.ml/invite/{request.args['key']}"
             })
+
+@app.route("/api/invite/get", methods=["GET", "POST"])
+def api_invite_get():
+    if not "api_key" in request.args:
+        return jsonify({
+            "error": {
+                "text": "Не верный api_key",
+                "solution": "Попросите разработчика новый api_key"
+            }
+        })
+    
+    if invites.count_documents({
+        "type": "api_key",
+        "key": request.args["api_key"]
+    }) == 0:
+        return jsonify({
+             "error": {
+                 "text": "Не верный api_key",
+                 "solution": "Попросите разработчика новый api_key"
+            }
+        })
+        
+    api_key = invites.find_one({
+        "type": "api_key",
+        "key": request.args["key"]
+    })
+    return {
+        "api_key": api_key["api_key"],
+        "uses": api_key["uses"],
+        "used": api_key["used"]
+    }
 
 
 if __name__ == "__main__":
