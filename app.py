@@ -61,7 +61,7 @@ def api_docs():
     <hr>
     <h3>GET /shortlink/create</h3>
     <p>In order to use the link building, you need to enter the key, the link to which you will be redirected, and the api key</p>
-    <p><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>pLQNGMyCclqOOEUD</b></p>
+    <p><p style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>pLQNGMyCclqOOEUD</b></p>
     """
 
 
