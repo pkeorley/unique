@@ -57,10 +57,15 @@ def invite_(key):
 
 @app.route("/api/docs")
 def api_docs():
-    return "okey"
+    return """<h1>http://www.pkeorley.ml/api/v1</h1>
+    <hr>
+    <h3>GET /shortlink/create</h3>
+    <p>In order to use the link building, you need to enter the key, the link to which you will be redirected, and the api key</p>
+    <p><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>pLQNGMyCclqOOEUD</b></p>
+    """
 
 
-@app.route("/api/shortlink/create", methods=["GET", "POST"])
+@app.route("/api/v1/shortlink/create", methods=["GET", "POST"])
 def api_invite_create():
     if request.method == "GET":
         args = [
@@ -129,7 +134,7 @@ def api_invite_create():
                 "result": f"http://www.pkeorley.ml/invite/{request.args['key']}"
             })
 
-@app.route("/api/shortlink/get", methods=["GET", "POST"])
+@app.route("/api/v1/shortlink/get", methods=["GET", "POST"])
 def api_invite_get():
     if request.method == "GET":
         if not "api_key" in request.args:
