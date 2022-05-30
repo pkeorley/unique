@@ -45,9 +45,7 @@ def invite_(key):
         "type": "invite",
         "key": key
     })
-    if invite is None:
-        return redirect("/")
-    else:
+    if invite is not None:
         return redirect(invite["url"])
         
 
