@@ -59,13 +59,13 @@ def invite_(key):
 def api_docs():
     return """<h1>http://www.pkeorley.ml/api/v1</h1>
     <hr>
-    <div><h3>GET <div style="color: #00ff00;">/shortlink/create</h3></div></div>
+    <span><h3>GET <div style="color: #00ff00;">/shortlink/create</h3></div></span>
     <p>In order to use the link building, you need to enter the key, the link to which you will be redirected, and the api key</p>
-    <p><div><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>pLQNGMyCclqOOEUD</b></div></p>
+    <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>pLQNGMyCclqOOEUD</b></span>
     <hr>
-    <div><h3>GET <div style="color: #00ff00;">/shortlink/get</h3></div></div>
+    <span><h3>GET <div style="color: #00ff00;">/shortlink/get</h3></div></span>
     <p>In order to get the ip key statistics - you need to insert it into the argument</p>
-    <p><div><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=<b>>pLQNGMyCclqOOEUD</b></div></p>
+    <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=<b>pLQNGMyCclqOOEUD</b></span>
     """
 
 
