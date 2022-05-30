@@ -142,7 +142,7 @@ def api_invite_get():
             
         api_key = invites.find_one({
             "type": "api_key",
-            "key": request.args["key"]
+            "key": request.args["api_key"]
         })
         return jsonify({
             "api_key": api_key["api_key"],
