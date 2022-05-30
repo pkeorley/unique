@@ -140,9 +140,9 @@ def api_invite_create():
 
     elif request.method == "POST":
         args = [
-            "key" in request.data,
-            "url" in request.data,
-            "api_key" in request.data
+            "key" in request.json,
+            "url" in request.json,
+            "api_key" in request.json
         ]
         if all(args) is False:
             return jsonify({
@@ -160,7 +160,7 @@ def api_invite_create():
         elif all(args) is True:
             if invites.count_documents({
                 "type": "api_key",
-                "key": request.data["api_key"]
+                "key": request.json["api_key"]
             }) == 0:
                 return jsonify({
                  "error": {
@@ -170,7 +170,7 @@ def api_invite_create():
                 })
             elif invites.count_documents({
                 "type": "invite",
-                "key": request.data["key"]
+                "key": request.json["key"]
             }) != 0:
                 return jsonify({
                     "error": {
@@ -180,7 +180,7 @@ def api_invite_create():
                 })
             elif invites.find_one({
                 "type": "api_key",
-                "key": request.data["api_key"]
+                "key": request.json["api_key"]
             })["uses"] <= 0:
                 return jsonify({
                     "error": {
@@ -191,18 +191,18 @@ def api_invite_create():
    
             invites.update_one({
                 "type": "api_key",
-                "key": request.data["api_key"]
+                "key": request.json["api_key"]
             }, {"$inc": {
                 "used": 1,
                 "uses": -1
             }})
             invites.insert_one({
                 "type": "invite",
-                "key": request.data["key"],
-                "url": request.data["url"]
+                "key": request.json["key"],
+                "url": request.json["url"]
             })
             return jsonify({
-                "result": f"http://www.pkeorley.ml/invite/{request.data['key']}"
+                "result": f"http://www.pkeorley.ml/invite/{request.json['key']}"
             })
 
 
