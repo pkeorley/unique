@@ -50,5 +50,10 @@ def invite_(key):
     return "<p class=\"error\">Unknown key</p>"
 
 
+@app.route("/api/invite/create/", methods=["GET", "POST"])
+def api_create_invite():
+    return request.data
+
+
 if __name__ == "__main__":
     app.run(**data["run"])
