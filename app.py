@@ -9,6 +9,7 @@ client = MongoClient(data["connent"])
 users = client.website.users
 invites = client.website.invites
 
+
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.cookies.get("logined"):
@@ -54,20 +55,29 @@ def invite_(key):
     })
 
 
-@app.route("/api/invite/create", methods=["GET", "POST"])
+@app.route("/api/docs")
+def api_docs():
+    return "okey"
+
+
+@app.route("/api/shortlink/create", methods=["GET", "POST"])
 def api_invite_create():
     if request.method == "GET":
-        args = ("key" in request.args, "url" in request.args, "api_key" in request.args)
+        args = [
+            "key" in request.args,
+            "url" in request.args,
+            "api_key" in request.args
+        ]
         if all(args) is False:
             return jsonify({
                 "error": {
-                    "text": "Отсутствует один из аргументов (key, url, api_key)",
+                    "text": "Missing one of the arguments in the link",
                     "args": {
                         "key": args[0],
                         "url": args[1],
                         "api_key": args[1]
                     },
-                    "solution": "Введите все 3 аргумента"
+                    "solution": "Enter all three arguments"
                 },
                 "example": "http://www.pkeorley.ml/api/invite/create/?key=google&url=https://google.com/&api_key=pLQNGMyCclqOOEUD"
             })
@@ -77,9 +87,9 @@ def api_invite_create():
                 "key": request.args["api_key"]
             }) == 0:
                 return jsonify({
-                    "error": {
-                        "text": "Не верный api_key",
-                        "solution": "Попросите разработчика новый api_key"
+                 "error": {
+                     "text": "Invalid api key",
+                     "solution": "Ask peaky to issue/replace you with a new api key"
                     }
                 })
             elif invites.count_documents({
@@ -88,7 +98,8 @@ def api_invite_create():
             }) != 0:
                 return jsonify({
                     "error": {
-                        "text": "Данный ключ уже существует"
+                        "text": "This key already exists",
+                        "solution": "Try entering a different key name"
                     }
                 })
             elif invites.find_one({
@@ -97,8 +108,8 @@ def api_invite_create():
             })["uses"] <= 0:
                 return jsonify({
                     "error": {
-                        "text": "Недостаточно использований апи-ключа (0)",
-                        "solution": "Попросите разработчика выдать вам использования"
+                        "text": "Not enough usage keys",
+                        "solution": "Ask peaky to give you usage points"
                     }
                 })
    
@@ -118,14 +129,14 @@ def api_invite_create():
                 "result": f"http://www.pkeorley.ml/invite/{request.args['key']}"
             })
 
-@app.route("/api/invite/get", methods=["GET", "POST"])
+@app.route("/api/shortlink/get", methods=["GET", "POST"])
 def api_invite_get():
     if request.method == "GET":
         if not "api_key" in request.args:
             return jsonify({
                 "error": {
-                    "text": "Не верный api_key",
-                    "solution": "Попросите разработчика новый api_key"
+                    "text": "Invalid api key",
+                    "solution": "Ask peaky to issue/replace you with a new api key"
                 }
             })
         
@@ -135,8 +146,8 @@ def api_invite_get():
         }) == 0:
             return jsonify({
                  "error": {
-                     "text": "Не верный api_key",
-                     "solution": "Попросите разработчика новый api_key"
+                     "text": "Invalid api key",
+                     "solution": "Ask peaky to issue/replace you with a new api key"
                 }
             })
             
@@ -146,8 +157,10 @@ def api_invite_get():
         })
         return jsonify({
             "api_key": api_key["key"],
-            "uses": api_key["uses"],
-            "used": api_key["used"]
+            "stats": {
+                "uses": api_key["uses"],
+                "used": api_key["used"]
+            }
         })
 
 
