@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, make_response
+from flask import Flask, render_template, request, redirect, , jsonify
 from pymongo import MongoClient
 
 from config import data
@@ -52,7 +52,33 @@ def invite_(key):
 
 @app.route("/api/invite/create/", methods=["GET", "POST"])
 def api_create_invite():
-    return request.args
+    if request.method == "GET":
+        args = ("key" in request.args, "url" in request.args, "api_key" in request.args)
+        if all(args) is False:
+            return jsonify({
+                "error": {
+                    "text": "Отсутствует один из аргументов (key, url, api_key)",
+                    "args": {
+                        "key": args[0],
+                        "url": args[1],
+                        "api_key": args[1]
+                    }
+                },
+                "example": "http://www.pkeorley.ml/api/invite/create/?key=google&url=https://google.com/&api_key=pLQNGMyCclqOOEUD"
+            })
+        elif all(args) is True:
+            if not invites.count_documents() == 0:
+                return jsonify({
+                    "error": {
+                        "text": "Данный ключ уже есть в базе данных"
+                    }
+                })
+            else:
+                invites.update_one(invite, {"$inc": {
+                    "used": 1,
+                    "uses": -1
+                }})
+                
 
 
 if __name__ == "__main__":
