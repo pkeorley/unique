@@ -237,16 +237,16 @@ def api_docs():
     <hr>
         <span><h3>GET <div style="color: #00ff00;">/shortlink/create</h3></div></span>
         <p>In order to use the link building, you need to enter the key, the link to which you will be redirected, and the api key</p>
-        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>{api_key}</b></span>
+        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>(api_key)</b></span>
     <hr>
         <span><h3>GET <div style="color: #00ff00;">/shortlink/get</h3></div></span>
         <p>In order to get the ip key statistics - you need to insert it into the argument</p>
-        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=<b>{api_key}</b></span>
+        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=<b>(api_key)</b></span>
     <hr>
         <span><h3>POST <div style="color: #00ff00;">/shortlink/create</h3></div></span>
         <p>In order to use the link building, you need to enter the key, the data to which you will be redirected, and the api key</p>
-        <span><div style="color: #ff0000;">Example:</div> <b><code>requests.post('http://www.pkeorley.ml/api/v1/shortlink/create?', json={'key': 'google', 'url': 'https://google.com/', 'api_key': '{api_key}'})</code></b></span>
-    """.format("{api_key}", "".join(random.choice(string.ascii_letters) for x in range(16)))
+        <span><div style="color: #ff0000;">Example:</div> <b><code>requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', json={'key': 'google', 'url': 'https://google.com/', 'api_key': '(api_key)'})</code></b></span>
+    """.replace("(api_key)", "".join(random.choice(string.ascii_letters) for x in range(16)))
 
 
 if __name__ == "__main__":
