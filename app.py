@@ -145,7 +145,7 @@ def api_invite_get():
             "key": request.args["api_key"]
         })
         return jsonify({
-            "api_key": api_key["api_key"],
+            "api_key": api_key["key"],
             "uses": api_key["uses"],
             "used": api_key["used"]
         })
