@@ -78,6 +78,15 @@ def api_create_invite():
                         "solution": "Попросите разработчика новый api_key"
                     }
                 })
+            elif invites.count_documents({
+                "type": "invite",
+                "key": request.args["key"]
+            }) != 0:
+                return jsonify({
+                    "error": {
+                        "text": "Данный ключ уже существует"
+                    }
+                })
             elif invites.find_one({
                 "type": "api_key",
                 "key": request.args["api_key"]
