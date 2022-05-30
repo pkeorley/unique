@@ -47,6 +47,7 @@ def invite_(key):
     })
     if invite is not None:
         return redirect(invite["url"])
+    return "0"
         
 
 if __name__ == "__main__":
