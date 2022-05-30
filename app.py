@@ -47,8 +47,8 @@ def invite_(key):
     })
     if invite is not None:
         return redirect(invite["url"])
-    return "0"
-        
+    return "<p class=\"error\">Unknown key</p>"
+
 
 if __name__ == "__main__":
     app.run(**data["run"])
