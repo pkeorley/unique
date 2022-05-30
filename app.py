@@ -138,6 +138,74 @@ def api_invite_create():
                 "result": f"http://www.pkeorley.ml/invite/{request.args['key']}"
             })
 
+    elif request.method == "POST":
+        args = [
+            "key" in request.data,
+            "url" in request.data,
+            "api_key" in request.data
+        ]
+        if all(args) is False:
+            return jsonify({
+                "error": {
+                    "text": "Missing one of the arguments in the data",
+                    "args": {
+                        "key": args[0],
+                        "url": args[1],
+                        "api_key": args[1]
+                    },
+                    "solution": "Enter all three data keys"
+                },
+                "example": "requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', data={'key': 'google', 'url': 'https://google.com/', 'api_key': 'pLQNGMyCclqOOEUD'}).json()"
+            })
+        elif all(args) is True:
+            if invites.count_documents({
+                "type": "api_key",
+                "key": request.data["api_key"]
+            }) == 0:
+                return jsonify({
+                 "error": {
+                     "text": "Invalid api key",
+                     "solution": "Ask peaky to issue/replace you with a new api key"
+                    }
+                })
+            elif invites.count_documents({
+                "type": "invite",
+                "key": request.data["key"]
+            }) != 0:
+                return jsonify({
+                    "error": {
+                        "text": "This key already exists",
+                        "solution": "Try entering a different key name"
+                    }
+                })
+            elif invites.find_one({
+                "type": "api_key",
+                "key": request.data["api_key"]
+            })["uses"] <= 0:
+                return jsonify({
+                    "error": {
+                        "text": "Not enough usage keys",
+                        "solution": "Ask peaky to give you usage points"
+                    }
+                })
+   
+            invites.update_one({
+                "type": "api_key",
+                "key": request.data["api_key"]
+            }, {"$inc": {
+                "used": 1,
+                "uses": -1
+            }})
+            invites.insert_one({
+                "type": "invite",
+                "key": request.data["key"],
+                "url": request.data["url"]
+            })
+            return jsonify({
+                "result": f"http://www.pkeorley.ml/invite/{request.data['key']}"
+            })
+
+
 @app.route("/api/v1/shortlink/get", methods=["GET", "POST"])
 def api_invite_get():
     if request.method == "GET":
