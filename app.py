@@ -120,34 +120,35 @@ def api_invite_create():
 
 @app.route("/api/invite/get", methods=["GET", "POST"])
 def api_invite_get():
-    if not "api_key" in request.args:
-        return jsonify({
-            "error": {
-                "text": "Не верный api_key",
-                "solution": "Попросите разработчика новый api_key"
-            }
-        })
-    
-    if invites.count_documents({
-        "type": "api_key",
-        "key": request.args["api_key"]
-    }) == 0:
-        return jsonify({
-             "error": {
-                 "text": "Не верный api_key",
-                 "solution": "Попросите разработчика новый api_key"
-            }
-        })
+    if request.method == "GET":
+        if not "api_key" in request.args:
+            return jsonify({
+                "error": {
+                    "text": "Не верный api_key",
+                    "solution": "Попросите разработчика новый api_key"
+                }
+            })
         
-    api_key = invites.find_one({
-        "type": "api_key",
-        "key": request.args["key"]
-    })
-    return {
-        "api_key": api_key["api_key"],
-        "uses": api_key["uses"],
-        "used": api_key["used"]
-    }
+        if invites.count_documents({
+            "type": "api_key",
+            "key": request.args["api_key"]
+        }) == 0:
+            return jsonify({
+                 "error": {
+                     "text": "Не верный api_key",
+                     "solution": "Попросите разработчика новый api_key"
+                }
+            })
+            
+        api_key = invites.find_one({
+            "type": "api_key",
+            "key": request.args["key"]
+        })
+        return jsonify({
+            "api_key": api_key["api_key"],
+            "uses": api_key["uses"],
+            "used": api_key["used"]
+        })
 
 
 if __name__ == "__main__":
