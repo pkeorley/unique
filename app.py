@@ -139,10 +139,11 @@ def api_invite_create():
             })
 
     elif request.method == "POST":
+        request_json = request.json or {}
         args = [
-            "key" in request.json,
-            "url" in request.json,
-            "api_key" in request.json
+            "key" in request_json,
+            "url" in request_json,
+            "api_key" in request_json
         ]
         if all(args) is False:
             return jsonify({
@@ -160,7 +161,7 @@ def api_invite_create():
         elif all(args) is True:
             if invites.count_documents({
                 "type": "api_key",
-                "key": request.json["api_key"]
+                "key": request_json["api_key"]
             }) == 0:
                 return jsonify({
                  "error": {
@@ -170,7 +171,7 @@ def api_invite_create():
                 })
             elif invites.count_documents({
                 "type": "invite",
-                "key": request.json["key"]
+                "key": request_json["key"]
             }) != 0:
                 return jsonify({
                     "error": {
@@ -180,7 +181,7 @@ def api_invite_create():
                 })
             elif invites.find_one({
                 "type": "api_key",
-                "key": request.json["api_key"]
+                "key": request_json["api_key"]
             })["uses"] <= 0:
                 return jsonify({
                     "error": {
@@ -191,15 +192,15 @@ def api_invite_create():
    
             invites.update_one({
                 "type": "api_key",
-                "key": request.json["api_key"]
+                "key": request_json["api_key"]
             }, {"$inc": {
                 "used": 1,
                 "uses": -1
             }})
             invites.insert_one({
                 "type": "invite",
-                "key": request.json["key"],
-                "url": request.json["url"]
+                "key": request_json["key"],
+                "url": request_json["url"]
             })
             return jsonify({
                 "result": f"http://www.pkeorley.ml/invite/{request.json['key']}"
