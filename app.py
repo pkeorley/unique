@@ -40,7 +40,7 @@ def chat():
 
 
 @app.route("/invite/<key>")
-def invite(key):
+def invite_(key):
     invite = users.find_one({
         "type": "invite",
         "key": key
