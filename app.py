@@ -52,7 +52,7 @@ def invite_(key):
 
 @app.route("/api/invite/create/", methods=["GET", "POST"])
 def api_create_invite():
-    return request.data
+    return request.args
 
 
 if __name__ == "__main__":
