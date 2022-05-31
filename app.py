@@ -278,7 +278,7 @@ def api_invite_get():
 
 @app.route("/api/docs")
 def api_docs():
-    api_key = "".join(random.choice(string.ascii_letter) for x in range(16))
+    api_key = "".join(random.choice(string.ascii_letters) for x in range(16))
     return render_template("index.html", url_for=url_for, api_key=api_key)
 
 
