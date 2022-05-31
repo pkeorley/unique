@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="pkeorley" property="og:title" />
+  <meta content="The most ordinary site on the most ordinary Internet." property="og:description" />
+  <meta content="http://www.pkeorley.ml/" property="og:url" />
+  <meta content="https://cdn.discordapp.com/attachments/880190564975403029/981261026832035950/unknown.png" property="og:image" />
+  <meta content="#202124" data-react-helmet="true" name="theme-color" />
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
+	<title>{% block title %}{% endblock %}</title>
+</head>
+<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}">{% block script %}{% endblock %}</script>
+<body>{% block body %}{% endblock %}</body>
+</html>
