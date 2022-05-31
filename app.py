@@ -70,11 +70,6 @@ def api_invite_create():
             return jsonify({
                 "error": {
                     "text": "Missing one of the arguments in the link",
-                    "args": {
-                        "key": args[0],
-                        "url": args[1],
-                        "api_key": args[1]
-                    },
                     "solution": "Enter all three arguments"
                 },
                 "example": "http://www.pkeorley.ml/api/invite/create/?key=google&url=https://google.com/&api_key=pLQNGMyCclqOOEUD"
@@ -132,25 +127,19 @@ def api_invite_create():
         args = [
             "key" in request_json,
             "url" in request_json,
-            "api_key" in request_json
         ]
-        if all(args) is False:
+        if all(args) is False and "Authorization" not in request.headers:
             return jsonify({
                 "error": {
                     "text": "Missing one of the arguments in the data",
-                    "args": {
-                        "key": args[0],
-                        "url": args[1],
-                        "api_key": args[1]
-                    },
-                    "solution": "Enter all three data keys"
+                    "solution": "Enter all two data keys"
                 },
-                "example": "requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', data={'key': 'google', 'url': 'https://google.com/', 'api_key': 'pLQNGMyCclqOOEUD'}).json()"
+                "example": "requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', data={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()"
             })
-        elif all(args) is True:
+        elif all(args) is True and "Authorization" in request.headers:
             if invites.count_documents({
                 "type": "api_key",
-                "key": request_json["api_key"]
+                "key": request.headers["Authorization"]
             }) == 0:
                 return jsonify({
                  "error": {
@@ -170,7 +159,7 @@ def api_invite_create():
                 })
             elif invites.find_one({
                 "type": "api_key",
-                "key": request_json["api_key"]
+                "key": request.headers["Authorization"]
             })["uses"] <= 0:
                 return jsonify({
                     "error": {
@@ -181,7 +170,7 @@ def api_invite_create():
    
             invites.update_one({
                 "type": "api_key",
-                "key": request_json["api_key"]
+                "key": request.headers["Authorization"]
             }, {"$inc": {
                 "used": 1,
                 "uses": -1
