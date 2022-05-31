@@ -14,34 +14,9 @@ invites = client.website.invites
 economc = client.website.economic
 
 
-@app.route("/", methods=["GET", "POST"])
-def login():
-    if request.cookies.get("logined"):
-        return redirect("/chat")
-    if request.method == "POST":
-        password = request.form.get("password")
-        if password == "putinpidaras":
-            cookies = make_response(redirect("/chat"))
-            cookies.set_cookie("logined", "true")
-            return cookies
-        else:
-            return "Не верный пароль! Перезагрузите страницу..."
-    return """<form method="post"><p><b>Введите пароль для входа на сайт:</b> <input name="password" id="password"></p><button>Try login</button></form>"""
-
-@app.route("/chat")
-def chat():
-    if not request.cookies.get("logined"): return redirect("/")
-    history = users.find_one({})["messages"]
-    all_messages = [[m[0], m[1].replace("<", "").replace(">", "").replace("&", "")] for m in history]
-    all_messages = [m[1] for m in all_messages]
-    all_words = " ".join(all_messages).split()
-    all_symbols = len("".join(all_words))
-    return render_template("index.html",
-        messages=history,
-        all_messages=len(all_messages),
-    all_words=len(all_words),
-        all_symbols=all_symbols
-    )
+@app.route("/")
+def mainpage():
+    return '<div style="text-align: center;">нет.</div>'
 
 
 @app.route("/invite/<key>")
@@ -303,34 +278,8 @@ def api_invite_get():
 
 @app.route("/api/docs")
 def api_docs():
-    return """<h1>http://www.pkeorley.ml/api/v1</h1>
-    <hr>
-        <span><h3>GET <div style="color: #00ff00;">/shortlink/create</h3></div></span>
-        <p>Use this method to create a new shortlink that can be clicked to.</p>
-        <p>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>
-        
-        <p><span style="color: #ff0000;">Example:</span> http://www.pkeorley.ml/api/v1/shortlink/create?key=google&url=https://google.com/&api_key=(api_key)</p>
-    
-    <hr>
-        <span><h3>GET <div style="color: #00ff00;">/shortlink/get</h3></div></span>
-        <p>Use this method to get your IP key statistics (if you don't have it, ask the site developer for it).</p>
-        <p>You need an <b>api key</b> to use this method</p>
-        
-        <p><span style="color: #ff0000;">Example:</span> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=(api_key)</p>
-        
-    <hr>
-        <span><h3>POST <div style="color: #00ff00;">/shortlink/create</h3></div></span>
-        <p>Use this method to create a new shortlink that can be clicked to.</p>
-        <p>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>
-        
-        <p><span style="color: #ff0000;">Example:</span> requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', json={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()</p>
-   
-   <hr>
-        <span><h3>GET <div style="color: #00ff00;">/shortlink/delete</h3></div></span>
-        <p>Use this method to remove shortlink from database</p>
-        <p><span style="color: #ff0000;">Example:</span> http://www.pkeorley.ml/api/v1/shortlink/delete?api_key=(api_key)&key=google</p>
-        
-    """.replace("(api_key)", "".join(random.choice(string.ascii_letters) for x in range(16)))
+    api_key = "".join(random.choice(string.ascii_letter) for x in range(16))
+    return render_template("index.html", url_for=url_for, api_key=api_key)
 
 
 if __name__ == "__main__":
