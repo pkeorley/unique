@@ -3,15 +3,55 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Quanted</title>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
+	<title>API Docs</title>
 </head>
 <body>
-	<p><b>Всего сообщений:</b> {{ all_messages }}</p>
-	<p><b>Всего слов:</b> {{ all_words }}</p>
-	<p><b>Всего символов:</b> {{ all_symbols }}</p>
-	<hr>
-	{% for message in messages %}
-		<p><b>{{ message[0] }}:</b> {{ message[1] }}</p>
-	{% endfor %}
+	<div class="doc">
+	    <h1>
+	    	<span class="header">API:<span>
+	    	<code>http://www.pkeorley.ml/api/v1</code>
+	   </h1>
+	</div>
+    <div class="doc">
+        <h3><span class="data">GET</span> /shortlink/create</h3>
+        <p><span class="ex">Description:</span> Use this method to create a new shortlink that can be clicked to.<br>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>
+        <p>
+        	<span class="ex">Example:</span>
+            <code>
+            	http://www.pkeorley.ml/api/v1/shortlink/create?key=google&url=https://google.com/&api_key=(api_key)
+        	</code>
+        </p>
+    </div>
+    <div class="doc">
+        <h3><span style="color: #7cb4f8;">GET</span> /shortlink/get</h3>
+        <p><span class="ex">Description:</span> Use this method to get your IP key statistics (if you don't have it, ask the site developer for it).<br>You need an <b>api key</b> to use this method</p>
+        <p>
+        	<span class="ex">Example:</span>
+        	<code>
+                http://www.pkeorley.ml/api/v1/shortlink/get?api_key=(api_key)
+        	</code>
+        </p>
+    </div>
+    <div class="doc">
+        <h3><span style="color: #7cb4f8;">POST</span> /shortlink/create</h3>
+        <p><span class="ex">Description:</span> Use this method to create a new shortlink that can be clicked to.<br>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>    
+        <p>
+        	<span class="ex">Example:</span>
+        	<code>
+        		import requests<br><br>json = {"key": "google", "url": "https://google.com/"}<br>headers = {"Authorization": "pLQNGMyCclqOOEUD"}<br>response = requests.post("http://www.pkeorley.ml/api/v1/shortlink/create", json=json, headers=headers)<br><br>print(response.json())
+        	</code>
+        </p>
+    </div>
+    <div class="doc">
+		<h3><span style="color: #7cb4f8;">GET</span> /shortlink/delete</h3>
+        <p><span class="ex">Description:</span> Use this method to remove shortlink from database</p>
+        <p>
+        	<span class="ex">Example:</span>
+            <code>
+            	http://www.pkeorley.ml/api/v1/shortlink/delete?api_key=(api_key)&key=google
+        	</code>
+        </p>
+    </div>
 </body>
 </html>
