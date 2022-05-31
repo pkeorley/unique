@@ -241,9 +241,9 @@ def apu_invite_delete():
             })["shortlinks"]
             
             index = 0
-            for x in shortlinks:
-                if x == request.args["key"]:
-                    del shortlinks[n]
+            for short in shortlinks:
+                if short == request.args["key"]:
+                    del shortlinks[index]
                 index += 1
                 
             invites.update_one({
