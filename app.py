@@ -11,6 +11,7 @@ app = Flask(__name__)
 client = MongoClient(data["connent"])
 users = client.website.users
 invites = client.website.invites
+economc = clent.website.economic
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -307,21 +308,28 @@ def api_docs():
         <span><h3>GET <div style="color: #00ff00;">/shortlink/create</h3></div></span>
         <p>Use this method to create a new shortlink that can be clicked to.</p>
         <p>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>
-        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>(api_key)</b></span>
+        
+        <p><span style="color: #ff0000;">Example:</span> http://www.pkeorley.ml/api/v1/shortlink/create?key=google&url=https://google.com/&api_key=(api_key)</p>
+    
     <hr>
         <span><h3>GET <div style="color: #00ff00;">/shortlink/get</h3></div></span>
         <p>Use this method to get your IP key statistics (if you don't have it, ask the site developer for it).</p>
         <p>You need an <b>api key</b> to use this method</p>
-        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=<b>(api_key)</b></span>
+        
+        <p><span style="color: #ff0000;">Example:</span> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=(api_key)</p>
+        
     <hr>
         <span><h3>POST <div style="color: #00ff00;">/shortlink/create</h3></div></span>
         <p>Use this method to create a new shortlink that can be clicked to.</p>
         <p>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>
-        <span><div style="color: #ff0000;">Example:</div> <b><code>requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', json={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()</code></b></span>
-    <hr>
+        
+        <p><span style="color: #ff0000;">Example:</span> requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', json={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()</p>
+   
+   <hr>
         <span><h3>GET <div style="color: #00ff00;">/shortlink/delete</h3></div></span>
         <p>Use this method to remove shortlink from database</p>
-        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/delete?api_key=<b>(api_key)</b>&key=<b>google</b></span>
+        <p><span style="color: #ff0000;">Example:</span> http://www.pkeorley.ml/api/v1/shortlink/delete?api_key=(api_key)&key=google</p>
+        
     """.replace("(api_key)", "".join(random.choice(string.ascii_letters) for x in range(16)))
 
 
