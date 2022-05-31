@@ -72,7 +72,7 @@ def api_invite_create():
                     "text": "Missing one of the arguments in the link",
                     "solution": "Enter all three arguments"
                 },
-                "example": "http://www.pkeorley.ml/api/invite/create/?key=google&url=https://google.com/&api_key=pLQNGMyCclqOOEUD"
+                "example": "http://www.pkeorley.ml/api/v1/shortlink/create?api_key=pLQNGMyCclqOOEUD&key=google&url=https://google.com/"
             })
         elif all(args) is True:
             if invites.count_documents({
@@ -136,7 +136,7 @@ def api_invite_create():
                     "text": "Missing one of the arguments in the data",
                     "solution": "Enter all two data keys"
                 },
-                "example": "requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', data={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()"
+                "example": "requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', json={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()"
             })
         elif all(args) is True and "Authorization" in request.headers:
             if invites.count_documents({
@@ -199,9 +199,9 @@ def apu_invite_delete():
             return jsonify({
                 "error": {
                     "text": "Missing one of the arguments in the link",
-                    "solution": "Enter all two arguments"
+                    "solution": "Enter two arguments"
                 },
-                "example": "http://www.pkeorley.ml/api/invite/create/?key=google&url=https://google.com/&api_key=pLQNGMyCclqOOEUD"
+                "example": "http://www.pkeorley.ml/api/v1/shortlink/delete?api_key=pLQNGMyCclqOOEUD&key=google"
             })
         elif all(args) is True:
             if invites.count_documents({
@@ -210,7 +210,7 @@ def apu_invite_delete():
             }) == 0:
                 return jsonify({
                  "error": {
-                     "text": "Invalid api key",
+                     "text": "Unknown api key",
                      "solution": "Ask peaky to issue/replace you with a new api key"
                     }
                 })
@@ -220,8 +220,8 @@ def apu_invite_delete():
             }) == 0:
                 return jsonify({
                     "error": {
-                        "text": "Unknown key",
-                        "solution": "Enter the key you want to delete (you created it earlier)"
+                        "text": "Unknown shortlink",
+                        "solution": "Enter the true shortlink which you want to delete"
                     }
                 })
             elif not invites.find_one({
@@ -260,7 +260,7 @@ def apu_invite_delete():
                 "key": request.args["key"]
             })
             return jsonify({
-                "result": f"Key deleted"
+                "result": f"Shortlink deleted"
             })
     
     
@@ -305,16 +305,23 @@ def api_docs():
     return """<h1>http://www.pkeorley.ml/api/v1</h1>
     <hr>
         <span><h3>GET <div style="color: #00ff00;">/shortlink/create</h3></div></span>
-        <p>In order to use the link building, you need to enter the key, the link to which you will be redirected, and the api key</p>
+        <p>Use this method to create a new shortlink that can be clicked to.</p>
+        <p>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>
         <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/create?key=<b>google</b>&url=<b>https://google.com/</b>&api_key=<b>(api_key)</b></span>
     <hr>
         <span><h3>GET <div style="color: #00ff00;">/shortlink/get</h3></div></span>
-        <p>In order to get the ip key statistics - you need to insert it into the argument</p>
+        <p>Use this method to get your IP key statistics (if you don't have it, ask the site developer for it).</p>
+        <p>You need an <b>api key</b> to use this method</p>
         <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/get?api_key=<b>(api_key)</b></span>
     <hr>
         <span><h3>POST <div style="color: #00ff00;">/shortlink/create</h3></div></span>
-        <p>In order to use the link building, you need to enter the key, the data to which you will be redirected, and the api key</p>
+        <p>Use this method to create a new shortlink that can be clicked to.</p>
+        <p>To use this method, you need an <b>api key</b>, the <b>name of the shortlink</b>, and a <b>link to which the shortlink will redirect</b></p>
         <span><div style="color: #ff0000;">Example:</div> <b><code>requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', json={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()</code></b></span>
+    <hr>
+        <span><h3>GET <div style="color: #00ff00;">/shortlink/delete</h3></div></span>
+        <p>Use this method to remove shortlink from database</p>
+        <span><div style="color: #ff0000;">Example:</div> http://www.pkeorley.ml/api/v1/shortlink/delete?api_key=<b>(api_key)</b>&key=<b>google</b></span>
     """.replace("(api_key)", "".join(random.choice(string.ascii_letters) for x in range(16)))
 
 
