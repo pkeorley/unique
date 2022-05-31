@@ -188,7 +188,82 @@ def api_invite_create():
                 "result": f"http://www.pkeorley.ml/invite/{request.json['key']}"
             })
 
-
+@app.route("/api/v1/shortlink/delete", methods=["GET", "POST"])
+def apu_invite_delete():
+    if request.method == "GET":
+        args = [
+            "key" in request.args,
+            "api_key" in request.args
+        ]
+        if all(args) is False:
+            return jsonify({
+                "error": {
+                    "text": "Missing one of the arguments in the link",
+                    "solution": "Enter all two arguments"
+                },
+                "example": "http://www.pkeorley.ml/api/invite/create/?key=google&url=https://google.com/&api_key=pLQNGMyCclqOOEUD"
+            })
+        elif all(args) is True:
+            if invites.count_documents({
+                "type": "api_key",
+                "key": request.args["api_key"]
+            }) == 0:
+                return jsonify({
+                 "error": {
+                     "text": "Invalid api key",
+                     "solution": "Ask peaky to issue/replace you with a new api key"
+                    }
+                })
+            elif invites.count_documents({
+                "type": "invite",
+                "key": request.args["key"]
+            }) == 0:
+                return jsonify({
+                    "error": {
+                        "text": "Unknown key",
+                        "solution": "Enter the key you want to delete (you created it earlier)"
+                    }
+                })
+            elif invites.find_one({
+                "type": "api_key",
+                "key": request.args["api_key"]
+            })["used"] >= 0:
+                return jsonify({
+                    "error": {
+                        "text": "Not enough points used",
+                        "solution": "Create a new key"
+                    }
+                })
+   
+            shortlinks = invites.find_one({
+                "type": "api_key",
+                "key": request.args["api_key"]
+            })["shortlinks"]
+            
+            index = 0
+            for x in shortlinks:
+                if x == request.args["key"]:
+                    del shortlinks[n]
+                index += 1
+                
+            invites.update_one({
+                "type": "api_key",
+                "key": request.args["api_key"]
+            }, {"$inc": {
+                "used": -1,
+                "uses": 1
+            }, "$set": {
+                "shortlinks": shortlinks
+            }})
+            invites.delete_one({
+                "type": "invite",
+                "key": request.args["key"]
+            })
+            return jsonify({
+                "result": f"Key deleted"
+            })
+    
+    
 @app.route("/api/v1/shortlink/get", methods=["GET", "POST"])
 def api_invite_get():
     if request.method == "GET":
