@@ -1,7 +1,7 @@
 import random
 import string
 
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, url_for
 from pymongo import MongoClient
 
 from config import data
