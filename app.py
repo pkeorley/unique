@@ -234,7 +234,7 @@ def api_docs():
     <hr>
         <span><h3>POST <div style="color: #00ff00;">/shortlink/create</h3></div></span>
         <p>In order to use the link building, you need to enter the key, the data to which you will be redirected, and the api key</p>
-        <span><div style="color: #ff0000;">Example:</div> <b><code>requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', data={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()</code></b></span>
+        <span><div style="color: #ff0000;">Example:</div> <b><code>requests.post('http://www.pkeorley.ml/api/v1/shortlink/create', json={'key': 'google', 'url': 'https://google.com/'}, headers={'Authorization': 'pLQNGMyCclqOOEUD'}).json()</code></b></span>
     """.replace("(api_key)", "".join(random.choice(string.ascii_letters) for x in range(16)))
 
 
