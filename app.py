@@ -11,7 +11,7 @@ app = Flask(__name__)
 client = MongoClient(data["connent"])
 users = client.website.users
 invites = client.website.invites
-economc = clent.website.economic
+economc = client.website.economic
 
 
 @app.route("/", methods=["GET", "POST"])
