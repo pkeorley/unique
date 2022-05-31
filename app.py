@@ -224,7 +224,7 @@ def apu_invite_delete():
                         "solution": "Enter the key you want to delete (you created it earlier)"
                     }
                 })
-            elif invites.find_one({
+            elif not invites.find_one({
                 "type": "api_key",
                 "key": request.args["api_key"]
             })["used"] >= 0:
