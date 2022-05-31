@@ -112,6 +112,8 @@ def api_invite_create():
             }, {"$inc": {
                 "used": 1,
                 "uses": -1
+            }, "$push": {
+                "shortlinks": request.args["key"]
             }})
             invites.insert_one({
                 "type": "invite",
@@ -174,6 +176,8 @@ def api_invite_create():
             }, {"$inc": {
                 "used": 1,
                 "uses": -1
+            }, "$push": {
+                "shortlinks": request_json["key"]
             }})
             invites.insert_one({
                 "type": "invite",
@@ -216,7 +220,8 @@ def api_invite_get():
             "stats": {
                 "uses": api_key["uses"],
                 "used": api_key["used"]
-            }
+            },
+            "shortlinks": api_key["shortlinks"]
         })
 
 
