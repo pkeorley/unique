@@ -16,7 +16,7 @@ economc = client.website.economic
 
 @app.route("/")
 def mainpage():
-    return redirect(url_for("/api/docs"))
+    return redirect("/api/docs")
 
 
 @app.route("/invite/<key>")
